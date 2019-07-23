@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <title>后台用户界面</title>
+
+    <link rel="stylesheet" href="./layui/css/layui.css"  media="all">
+
+    <style>
+
+        .site-doc-icon li{width: 222px;}
+
+        .site-doc-icon li .layui-anim{width: 150px; height: 150px; line-height: 150px; margin: 0 auto 10px; text-align: center; background-color: #009688; cursor: pointer; color: #fff; border-radius: 50%;}
+
+    </style>
+
+</head>
+
+<body>
+
+<ul class="site-doc-icon site-doc-anim">
+
+    <li>
+
+        <div class="layui-anim" data-anim="layui-anim-scale">平滑放大</div>
+
+        <div class="code">layui-anim-scale</div>
+
+    </li>
+
+    <li>
+
+        <div class="layui-anim" data-anim="layui-anim-scaleSpring">弹簧式放大</div>
+
+        <div class="code">layui-anim-scaleSpring</div>
+
+    </li>
+
+</ul>
+
+<script type="text/javascript" src="./layui/layui.js" charset="utf-8"></script>
+
+ 
+
+ 
+
+<!--演示动画-->
+
+ 
+
+<script>
+
+    layui.use('jquery', function(){
+
+        var $ = layui.$;
+
+ 
+
+        //演示动画
+
+        $('.site-doc-icon .layui-anim').on('click', function(){
+
+            var othis = $(this), anim = othis.data('anim');
+
+ 
+
+            //停止循环
+
+            if(othis.hasClass('layui-anim-loop')){
+
+                return othis.removeClass(anim);
+
+            }
+
+ 
+
+            othis.removeClass(anim);
+
+ 
+
+            setTimeout(function(){
+
+                othis.addClass(anim);
+
+            });
+
+            //恢复渐隐
+
+            if(anim === 'layui-anim-fadeout'){
+
+                setTimeout(function(){
+
+                    othis.removeClass(anim);
+
+                }, 1300);
+
+            }
+
+        });
+
+    });
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>
+                个人信息
+            </title>
+            <link href="./layui/css/layui.css" media="all" rel="stylesheet">
+                <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+            </link>
+        </meta>
+        <style type="text/css">
+            .layui-form{
+        	width: 80%;
+        	margin-left: 15%;
+        }
+        .layui-input-block{
+        	width: 50%;
+        }
+        </style>
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <div class="layui-logo" style="color: white">
+                    <i class="layui-icon layui-icon-face-smile" style="font-size: 30px; color: #1E9FFF;">
+                    </i>
+                    个人信息
+                </div>
+                <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <img class="layui-nav-img" src="http://t.cn/RCzsdCq">
+                                kevin
+                            </img>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd>
+                                <a href="./pwdModify.html">
+                                    修改密码
+                                </a>
+                            </dd>
+                            <dd>
+                                <a href="./main.html">
+                                    退出
+                                </a>
+                            </dd>
+                        </dl>
+                    </li>
+                </ul>
+                <!-- 头部区域（可配合layui已有的水平导航） -->
+            </div>
+            <div class="layui-body" style="left: 8%;margin-top: 40px">
+                <form action="" class="layui-form">
+                    <!-- ------------------基本信息................ -->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            姓名
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="default" required="" type="text">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            年龄
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="default" required="" type="text">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            电话号码
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="default" required="" type="text">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            工作ID
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="default" required="" type="text">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            分配部门
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="default" required="" type="text">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            备注
+                        </label>
+                        <div class="layui-input-block">
+                            <input autocomplete="off" class="layui-input" lay-verify="required" name="title" placeholder="default" required="" type="text">
+                            </input>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn layui-btn-primary" type="reset">
+                                修改
+                            </button>
+                            <button class="layui-btn layui-btn-primary" type="reset">
+                                确认
+                            </button>
+							<a href="./main.html" class="layui-btn">关闭</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="./layui/layui.js">
+        </script>
+        <script>
+            //Demo
+         layui.use('element', function(){
+          var element = layui.element;
+  
+        });
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //监听提交
+  form.on('submit(formDemo)', function(data){
+    layer.msg(JSON.stringify(data.field));
+    return false;
+  });
+});
+        </script>
+    </body>
+</html>

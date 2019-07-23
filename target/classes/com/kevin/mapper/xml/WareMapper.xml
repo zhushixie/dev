@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.WareMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TWaretask">
+		<id column="id" property="id" />
+		<result column="t_name" property="tName"/>
+		<result column="t_type" property="tType"/>
+		<result column="t_state" property="tState"/>
+		<result column="t_starter" property="tStarter"/>
+		<result column="t_content" property="tContent"/>
+		<result column="t_createtime" property="tCreatetime"/>
+		<result column="t_directorid" property="tDirectorid"/>
+		<result column="t_directorview" property="tDirectorview"/>
+		<result column="t_managerid" property="tManagerid"/>
+		<result column="t_managerview" property="tManagerview"/>
+		<result column="t_checkerid" property="tCheckerid"/>
+		<result column="t_checkerview" property="tCheckerview"/>
+		
+	</resultMap>
+	<insert id="insertTask" parameterType="com.kevin.entity.TWaretask" keyProperty="id" useGeneratedKeys="true">
+    insert t_waretask(t_name,t_type,t_state,t_starter,t_content,t_createtime)values(#{tName},#{tType},#{tState},#{tStarter},#{tContent},#{tCreatetime})
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+            <![CDATA[SELECT LAST_INSERT_ID() as id]]>
+     </selectKey>
+    </insert>
+    <update id="updateTask" parameterType="com.kevin.entity.TWaretask">
+    update t_waretask set t_name=#{tName},t_state=#{tState},t_content=#{tContent},t_createtime=#{tCreatetime} where id=#{id}
+    </update>
+    <update id="updateTaskDirectorView" parameterType="com.kevin.entity.TWaretask">
+   update t_waretask set t_directorid=#{t_directorid},t_directorview=#{t_directorview} where id=#{id}  
+    </update>
+     <update id="updateTaskManagerView" parameterType="com.kevin.entity.TWaretask">
+      update t_waretask set t_managerid=#{t_managerid},t_managerview=#{t_managerview} where id=#{id}  
+    </update>
+     <update id="updateTaskCheckerView" parameterType="com.kevin.entity.TWaretask">
+        update t_waretask set t_checkerid=#{t_checkerid},t_checkerview=#{t_checkerview} where id=#{id}    
+    </update>
+    <select id="getAllTaskList" resultMap="BaseResultMap">
+    select * from t_waretask where t_starter=#{t_starter} and t_state=#{t_state}
+    </select>
+    <select id="getKeeperStartTaskList" resultMap="BaseResultMap">
+    select * from t_waretask where t_starter=#{t_starter} and t_state not in ('save','finish')
+    </select>
+        <select id="getKeeperFinishTaskList" resultMap="BaseResultMap">
+    select * from t_waretask where t_starter=#{t_starter} and t_state ='finish'
+    </select>
+        <select id="getTaskListByState" resultMap="BaseResultMap">
+    select * from t_waretask where t_state =#{t_state}
+    </select>
+     <select id="findTaskById" resultMap="BaseResultMap">
+    	select * from t_waretask where id =#{id}
+    </select>
+    <update id="updateTaskState">
+     update t_waretask set t_state=#{t_state} where id=#{id}
+    </update>
+    <delete id="deleteTask">
+    delete from t_waretask where id = #{id}
+    </delete>
+    <select id="getTaskListByExecuterId" resultMap="BaseResultMap">
+     select t_waretask.* from t_waretask inner join t_wareview on t_waretask.id = t_wareview.t_taskid and t_wareview.t_executerid=#{id}
+    </select>
+    
+</mapper>

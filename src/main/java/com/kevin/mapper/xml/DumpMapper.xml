@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.DumpMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TDumptask">
+		<id column="id" property="id" />
+		<result column="t_name" property="tName"/>
+		<result column="t_state" property="tState"/>
+		<result column="t_starterid" property="tStarterid"/>
+		<result column="t_devcode" property="tDevcode"/>
+		<result column="t_dumptime" property="tDumptime"/>
+		<result column="t_content" property="tContent"/>
+		<result column="t_directorid" property="tDirectorid"/>
+		<result column="t_directorview" property="tDirectorview"/>
+		<result column="t_managerid" property="tManagerid"/>
+		<result column="t_managerview" property="tManagerview"/>
+		<result column="t_checkerid" property="tCheckerid"/>
+		<result column="t_checkerview" property="tCheckerview"/>
+	</resultMap>
+	<select id="selectTasks" resultMap="BaseResultMap">
+	select * from t_dumptask
+	</select>
+	<select id="selectOnTasksByStaterid" resultMap="BaseResultMap">
+	select * from t_dumptask where t_starterid = #{starterid} and  t_state not in('finish','save','abandon');
+	</select>
+		<select id="selectSaveTasksByStaterid" resultMap="BaseResultMap">
+	select * from t_dumptask where t_starterid = #{starterid} and  t_state ='save';
+	</select>
+	<select id="selectTaskRecordByStaterid" resultMap="BaseResultMap">
+	select * from t_dumptask where t_starterid = #{starterid} and  t_state in('finish','abandon');
+	</select>
+	<select id="selectTaskByState" resultMap="BaseResultMap">
+	select * from t_dumptask where t_state = #{tState};
+	</select>
+	<select id="selectTaskById" resultMap="BaseResultMap">
+	select * from t_dumptask where id = #{id}
+	</select>
+	<insert id="insertTask" parameterType="com.kevin.entity.TDumptask" keyProperty="id" useGeneratedKeys="true">
+    insert t_dumptask(t_name,t_state,t_starterid,t_devcode,t_dumptime,t_content)values(#{tName},#{tState},#{tStarterid},#{tDevcode},#{tDumptime},#{tContent})
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+            <![CDATA[SELECT LAST_INSERT_ID() as id]]>
+     </selectKey>
+	</insert>
+	<update id="updateTaskCheckerState">
+	update t_dumptask set t_checkerid = #{t_checkerid},t_checkerview=#{t_checkerview},t_state=#{t_state} where id=#{id}
+	</update>
+		<update id="updateTaskDirectorState">
+	update t_dumptask set t_directorid = #{t_directorid},t_directorview=#{t_directorview},t_state=#{t_state} where id=#{id}
+	</update>
+		<update id="updateTaskManagerState">
+	update t_dumptask set t_managerid = #{t_managerid},t_managerview=#{t_managerview},t_state=#{t_state} where id=#{id}
+	</update>
+</mapper>

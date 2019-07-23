@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.RouteMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TRoutetask">
+		<id column="id" property="id" />
+		<result column="t_name" property="tName" />
+		<result column="t_starter" property="tStarterId" />
+		<result column="t_phone" property="tPhone" />
+		<result column="t_depositor" property="tDepositorId" />
+		<result column="t_time" property="tTime"/>
+		<result column="t_content" property="tContent" />
+		<result column="t_type" property="tType"/>
+		<result column="t_reason" property="tReason"/>
+	</resultMap>
+	<insert id="insertTask" parameterType="com.kevin.entity.TRoutetask" keyProperty="id" useGeneratedKeys="true">
+    insert t_routetask(t_name,t_starter,t_phone,t_depositor,t_time,t_content,t_type)values(#{tName},#{tStarterId},
+    #{tPhone},#{tDepositorId},#{tTime},#{tContent},#{tType})
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+            <![CDATA[SELECT LAST_INSERT_ID() as id]]>
+     </selectKey>
+    </insert>
+    <select id="findSaveTask" resultMap="BaseResultMap">
+    select * from t_routetask where t_type='save' and t_Starter=#{id}
+    </select>
+      <select id="findStartTask" resultMap="BaseResultMap">
+    select * from t_routetask where t_type in('start','accept','reject') and t_Starter=#{id}
+    </select>
+          <select id="findTaskById" resultMap="BaseResultMap">
+    select * from t_routetask where id=#{id}
+    </select>
+    <update id="updateTask" parameterType="com.kevin.entity.TRoutetask">
+    update t_routetask set t_name=#{tName},t_type=#{tType},t_depositor=#{tDepositorId},t_time=#{tTime},t_content=#{tContent},t_phone=#{tPhone} where id=#{id}
+    </update>
+        <update id="updateTaskState">
+    update t_routetask set t_type=#{t_type} where id=#{id}
+    </update>
+            <update id="updateTaskReason">
+    update t_routetask set t_reason=#{t_reason} where id=#{id}
+    </update>
+    <delete id="deleteTask">
+    delete from t_routetask where id = #{id}
+    </delete>
+    
+    <select id="findMyRouteTask" resultMap="BaseResultMap">
+    select * from t_routetask where t_depositor=#{userId} and t_type='start'
+    </select>
+        <select id="findMyExecuteTask" resultMap="BaseResultMap">
+    select * from t_routetask where t_depositor=#{userId} and t_type='accept'
+    </select>
+            <select id="myRouteTaskHistory" resultMap="BaseResultMap">
+    select * from t_routetask where t_depositor=#{userId} and t_type in('done','stop','abandon','reject','finish')
+    </select>
+       <select id="adminRouteTaskHistory" resultMap="BaseResultMap">
+    select * from t_routetask where t_starter=#{userId} and t_type in('done','stop','abandon','reject','finish')
+    </select>
+   	<resultMap id="DevMsgMap" type="com.kevin.entity.TRoutedev">
+		<id column="id" property="id" />
+		<result column="t_name" property="tName" />
+		<result column="t_checker" property="tCheckerId" />
+		<result column="t_code" property="tCode" />
+		<result column="t_time" property="tTime"/>
+		<result column="t_content" property="tContent" />
+		<result column="t_type" property="tType"/>
+	</resultMap> 
+	<insert id="insertDevMsg" parameterType="com.kevin.entity.TRoutedev" keyProperty="id" useGeneratedKeys="true">
+    insert t_routedev(t_name,t_checker,t_code,t_time,t_content,t_type)values(#{tName},#{tCheckerId},
+    #{tCode},#{tTime},#{tContent},#{tType})
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+            <![CDATA[SELECT LAST_INSERT_ID() as id]]>
+     </selectKey>
+    </insert>
+    <select id="findDevMsg" resultMap="DevMsgMap">
+    select * from t_routedev
+    </select>
+</mapper>

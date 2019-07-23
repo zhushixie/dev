@@ -1,0 +1,6 @@
+[
+  { "id" : "demo_root_1", "text" : "车间一", "children" : true, "type" : "root" },
+  { "id" : "demo_root_2", "text" : "车间二", "children" : true, "type" : "root"  },
+  { "id" : "demo_root_3", "text" : "车间三", "children" : true, "type" : "root"  },
+  { "id" : "demo_root_4", "text" : "车间四", "children" : true, "type" : "root"  }
+]

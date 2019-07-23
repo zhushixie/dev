@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.UserMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.User">
+		<id column="user_id" property="id" />
+		<result column="user_name" property="name" />
+		<result column="user_phone" property="phone" />
+		<result column="user_sex" property="sex" />
+		<result column="user_createtime" property="createtime" />
+		<result column="user_born" property="born" />
+		<result column="user_deptId" property="deptId" />
+		<result column="user_addr" property="addr" />
+	</resultMap>
+</mapper>

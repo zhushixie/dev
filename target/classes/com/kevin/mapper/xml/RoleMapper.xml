@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.RoleMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.RoleBean">
+		<id column="id" property="id" />
+		<result column="parentId" property="pId" />
+		<result column="t_name" property="name" />
+		<result column="t_descript" property="descript" />
+		<result column="t_createtime" property="createtime" />
+		<result column="dept" property="lay_is_checked"/>
+	</resultMap>
+	<resultMap id="userRoleMap" type="com.kevin.entity.UserRoleBean">
+		<id column="id" property="id" />
+		<result column="t_userId" property="userId" />
+		<result column="t_roleId" property="roleId" />
+	</resultMap>
+    <select id="findAllRole" resultMap="BaseResultMap">
+    	select * from t_role
+    </select>
+    <select id="findSelectedRoles" resultMap="BaseResultMap">
+    select t_role.*,(case when t_userrole.t_userId IS NULL then 'false' else 'true' end)dept  from t_role left join t_userrole on t_role.id=t_userrole.t_roleId and t_userrole.t_userId=#{id};
+    </select>
+    <select id="findRoleById" resultMap="BaseResultMap">
+        select * from t_role where id = #{roleId}
+    </select>
+     <select id="findRolesByUserId" resultMap="userRoleMap">
+        select * from t_userrole where t_userId = #{userId}
+    </select>
+<insert id="addUserRole" parameterType="com.kevin.entity.UserRoleBean" keyProperty="id" useGeneratedKeys="true">
+    insert t_userrole(t_userId,t_roleId)values(#{userId},#{roleId})
+    </insert>
+    <insert id="addRole" parameterType="com.kevin.entity.RoleBean" keyProperty="id" useGeneratedKeys="true">
+    insert t_role(t_name,parentId,t_descript)values(#{name},#{pId},#{descript})
+    <selectKey resultType="java.lang.Integer" keyProperty="id">
+            <![CDATA[SELECT LAST_INSERT_ID() as id]]>
+     </selectKey>
+    </insert>
+    <!-- 查找角色ID -->
+         <select id="findRoleByName" resultType="java.lang.Integer">
+        select id from t_role where t_name = #{name}
+    </select>
+    	<resultMap id="userMap" type="com.kevin.entity.UserBean">
+		<id column="user_id" property="id" />
+		<result column="user_name" property="name" />
+	</resultMap>
+     <select id="getAllCheckMan" resultMap="userMap">
+        select t_user.user_id,t_user.user_name from t_user inner join t_userrole on t_user.user_id = t_userrole.t_userId and t_userrole.t_roleId=#{id}
+    </select>
+    <delete id="deleteUserRole" parameterType="com.kevin.entity.UserRoleBean">
+    delete from t_userrole where t_userId = #{userId} and t_roleId = #{roleId}
+    </delete>
+    <resultMap id="UserRoleSettings" type="com.kevin.entity.RoleBean">
+		<id column="id" property="id" />
+		<result column="parentId" property="name" />
+		<result column="t_name" property="name" />
+		<result column="t_descript" property="descript" />
+		<result column="t_createtime" property="createtime" />
+		<result column="state" property="lay_is_checked" />
+	</resultMap>
+    <select id="findByUserId" resultMap="UserRoleSettings">
+    select t_role.*,case t_userRole.t_userId when t_userRole.t_userId>=0 then true else false end state from t_role left join t_userRole on t_role.id=#{id};
+    </select>
+</mapper>

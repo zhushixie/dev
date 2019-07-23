@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .c1{
+           position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #0f0f0f;
+            opacity: 0.5;
+            z-index: 9;
+        }
+        .c2{
+            width: 500px;
+            height: 400px;
+            background-color: #f9f9f9;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            margin-top: -200px;
+            margin-left: -250px;
+            z-index: 10;
+
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body style="margin: 0;">
+<div>
+    <input type="button" value="添加" onclick="ShowMod();">
+</div>
+<!--遮罩层开始-->
+<div id='id1' class="c1 hide">
+
+</div>
+<!--遮罩层结束-->
+<!--弹出框开始-->
+
+<div id= 'id2'class="c2 hide">
+    <p class="=c3"><input type="text" placeholder="username"></p>
+    <p><input type="password" placeholder="password"></p>
+    <p><input type="button" value="取消" onclick="HideMod();">
+        <input type="button" value="确定"></p>
+
+</div>
+<!--弹出框结束-->
+<script>
+    function ShowMod(){
+        document.getElementById('id1').classList.remove('hide');
+        document.getElementById('id2').classList.remove('hide');
+
+    }
+   function HideMod(){
+        document.getElementById('id1').classList.add('hide');
+        document.getElementById('id2').classList.add('hide');
+
+    }
+</script>
+</body>
+</html>

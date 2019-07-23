@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<title>
+</title>
+<head>
+<style type="text/css">
+    a{text-decoration: none; color: #eee; display: block;}
+    .button{width: 200px; height: 50px; border-radius: 20px; text-align:center;line-height: 50px;}
+    .callout_button{background:#FF5B5B;margin:0 auto; }
+    .callout_button:hover{background: red;}
+    .close_button{background:#363636;margin:0 auto;}
+    .close_button:hover{background: black;}
+    .mask{width: 100%;height: 100%;background:#000;position: absolute;top: 0px;left:0px;opacity: 0.4;z-index: 8000; display: none;-moz-user-select: none; -webkit-user-select: none;}
+    .dialog{width: 380px;background:#fff; position: absolute;z-index: 9000;padding-bottom: 10px; display: none;-moz-user-select: none; -webkit-user-select: none;}
+    .dialog_head{width: 100%;height:50px;background:#4B4B4B;text-align: center;line-height: 50px;color: #eee; cursor: move;}
+    .dialog_content{width: 100%;height:300px;}
+</style>
+<script type="text/javascript">
+function g(id){
+    return document.getElementById(id);
+};
+function autoCenter(el){
+    //获取可见窗口大小
+    var bodyW = document.documentElement.clientWidth;
+    var bodyH = document.documentElement.clientHeight;
+    //获取对话框宽、高
+    var elW = el.offsetWidth;
+    var elH = el.offsetHeight;
+    el.style.left = (bodyW - elW)/2 + 'px';
+    el.style.top = (bodyH - elH)/2 + 'px';
+};
+
+
+//声明需要用到的变量
+var mx = 0,my = 0;      //鼠标x、y轴坐标（相对于left，top）
+var dx = 0,dy = 0;      //对话框坐标（同上）
+var isDraging = false;      //不可拖动
+
+
+
+</script>
+</head>
+<body>
+<div id="callout" class="button callout_button"><a href="#">弹出对话框</a></div>
+<div id="mask" class="mask"></div>
+<div class="dialog" id="dialog">
+    <div class="dialog_head" id="move_part">可拖拽部分</div>
+    <div class="dialog_content">
+    </div>
+    <div class="button close_button" id="close"><a href="#">点我关闭对话框</a>
+    </div>
+</div>
+<script type="text/javascript">
+//点击弹出对话框
+g('callout').onclick = function(){
+    g('dialog').style.display = 'block';
+     g('mask').style.display= 'block';
+     autoCenter(g('dialog'));
+};
+//窗口大小改变时，对话框始终居中
+window.onresize = function(){
+    autoCenter(g('dialog'));
+};
+//点击关闭对话框
+g('close').onclick = function(){
+    g('dialog').style.display = 'none';
+     g('mask').style.display = 'none';
+};
+//鼠标按下
+g('move_part').addEventListener('mousedown',function(e){
+    var e = e || window.event;
+    mx = e.pageX;      //点击时鼠标X坐标
+      my = e.pageY;      //点击时鼠标Y坐标
+      dx = g('dialog').offsetLeft;
+    dy = g('dialog').offsetTop;
+    isDraging = true;      //标记对话框可拖动
+});
+//鼠标离开
+g('move_part').addEventListener('mouseup',function(){
+    isDraging = false;
+});
+//禁止选中对话框内容
+if(document.attachEvent) {//ie的事件监听，拖拽div时禁止选中内容，firefox与chrome已在css中设置过-moz-user-select: none; -webkit-user-select: none;
+    g('dialog').attachEvent('onselectstart', function() {
+      return false;
+    });
+}
+document.onmousemove = function(e){
+    var e = e || window.event;
+    var x = e.pageX;      //移动时鼠标X坐标
+      var y = e.pageY;      //移动时鼠标Y坐标
+      if(isDraging){        //判断对话框能否拖动
+        var moveX = dx + x - mx;      //移动后对话框新的left值
+        var moveY = dy + y - my;      //移动后对话框新的top值
+        g('dialog').style.left = moveX +'px';       //重新设置对话框的left
+      g('dialog').style.top =  moveY +'px';     //重新设置对话框的top
+
+    };
+};
+var pageW = document.documentElement.clientWidth;
+var pageH = document.documentElement.clientHeight;
+var dialogW = g('dialog').offsetWidth;
+var dialogH = g('dialog').offsetHeight;
+var maxX = pageW - dialogW;       //X轴可拖动最大值
+   var maxY = pageH - dialogH;       //Y轴可拖动最大值
+   moveX = Math.min(Math.max(0,moveX),maxX);     //X轴可拖动范围
+   moveY = Math.min(Math.max(0,moveY),maxY);     //Y轴可拖动范围
+  g('dialog').style.left = moveX +'px';       //重新设置对话框的left
+g('dialog').style.top =  moveY +'px';        //重新设置对话框的top
+</script>
+</body>
+</html>

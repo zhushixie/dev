@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.AuthMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.AuthBean">
+		<id column="id" property="id" />
+		<result column="t_name" property="name" />
+		<result column="parentId" property="pId" />
+		<result column="t_descript" property="descript" />
+		<result column="dept" property="lay_is_checked"/>
+	</resultMap>
+	<resultMap id="roleAuthMap" type="com.kevin.entity.TRoleauth">
+		<id column="id" property="id" />
+		<result column="roleId" property="roleid" />
+		<result column="authId" property="authid" />
+		<result column="own" property="own" />
+	</resultMap>
+    <select id="findAllAuth" resultMap="BaseResultMap">
+    	select * from t_auth
+    </select>
+        <select id="findSelectedAuths" resultMap="BaseResultMap">
+    	select t_auth.*,(case when t_roleauth.authId IS NULL then 'false' else 'true' end)dept from t_auth left join t_roleauth on t_roleauth.roleId = #{id} and t_auth.id = t_roleauth.authId
+    </select>
+    <insert id="addRoleAuth" parameterType="com.kevin.entity.TRoleauth" keyProperty="id" useGeneratedKeys="true">
+    insert t_roleauth(roleId,authId)values(#{roleid},#{authid})
+    </insert>
+    <delete id="deleteRoleAuth" parameterType="com.kevin.entity.TRoleauth">
+    delete from t_roleauth where roleId = #{roleid} and authId = #{authid}
+    </delete>
+        <select id="findAuthByRoleId" resultMap="roleAuthMap">
+    	select * from t_roleauth where roleId = #{roleId}
+    </select>
+            <select id="findEleByAuthId" resultMap="BaseResultMap">
+    	select * from t_auth where id=#{authId}
+    </select>
+</mapper>

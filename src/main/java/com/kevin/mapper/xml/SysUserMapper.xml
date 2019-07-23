@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.SysUserMapper">
+     <resultMap id="BaseResultMap" type="com.kevin.entity.AcUserBean">
+        <result property="ac_id" column="ac_id"/>
+        <result property="ac_name" column="ac_name"/>
+        <result property="ac_pwd" column="ac_pwd"/>
+         <result property="ac_addr" column="ac_addr"/>
+          <result property="ac_phone" column="ac_phone"/>
+        <result property="ac_state" column="ac_state"/>
+    </resultMap>
+   <select id="selectOne" parameterType="com.kevin.entity.AcUserBean" resultMap="BaseResultMap">
+        select ac_id, ac_name,ac_pwd,ac_state from account where ac_name=#{ac_name} and ac_pwd=#{ac_pwd}
+    </select>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.AccessoryMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TAccessory">
+		<id column="t_code" property="tCode" />
+		<result column="t_name" property="name" />
+		<result column="t_count" property="tCount" />
+		<result column="t_descript" property="tDescript" />
+		<result column="t_parcode" property="tParcode" />
+		<result column="t_supply" property="tSupply" />
+	</resultMap>
+	<insert id="insertAccessory" keyProperty="tCode" useGeneratedKeys="true">
+	insert t_accessory(t_code,t_name,t_count,t_descript,t_parcode,t_supply)values(#{tCode},#{tName},#{tCount},#{tDescript},
+	#{tParcode},#{tSupply})
+	    <selectKey resultType="java.lang.String" keyProperty="tCode">
+            <![CDATA[SELECT LAST_INSERT_ID() as tCode]]>
+     </selectKey>
+    </insert>
+	<update id="updateAccessory">
+	update t_accessory set t_count=#{t_count} where t_code =#{t_code}
+	</update>
+	<select id="checkCodeIsInTable" resultType="java.lang.Integer">
+	select count(*) from t_accessory where t_code = #{tCode}
+	</select>
+	<select id="getAccessoryMountByCode" resultType="java.lang.Integer">
+	select t_count from t_accessory where t_code = #{tCode}
+	</select>
+		<resultMap id="RecordMap" type="com.kevin.entity.TWarerecord">
+		<id column="id" property="id" />
+		<result column="t_type" property="tType" />
+		<result column="t_user" property="tUser" />
+		<result column="t_content" property="tContent" />
+		<result column="t_time" property="tTime" />
+	</resultMap>
+		<insert id="insertRecord" keyProperty="id" useGeneratedKeys="true">
+	insert t_warerecord(t_type,t_user,t_content,t_time)values(#{tType},#{tUser},#{tContent},#{tTime})
+	    <selectKey resultType="java.lang.Integer" keyProperty="id">
+            <![CDATA[SELECT LAST_INSERT_ID() as id]]>
+     </selectKey>
+    </insert>
+    <select id="getRecordsByUserIdAndType" resultMap="RecordMap">
+    select * from t_warerecord where t_user = #{t_user} and t_type=#{t_type}
+    </select>
+    <select id="getWareRecordsByType" resultMap="RecordMap">
+    select * from t_warerecord where t_type = #{tType}
+    </select>
+</mapper>

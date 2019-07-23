@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>鐢ㄦ埛绠＄悊</title>
+	<style type="text/css">
+	.navi{
+		height: 60px;
+		top: 5px;
+		margin-top: 20px;
+		margin-left: 20px;
+		margin-right: 20px;
+
+	}
+	.layui-btn{
+		margin-top: 15px;
+		margin-bottom: 10px;
+		margin-left: 10px;
+	}
+	.btnPos{
+		margin-left: 50px;
+	}
+	#tablePos{
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+
+		
+	</style>
+	                <link href="./layui/css/layui.css" rel="stylesheet">
+                </link>
+</head>
+<body>
+
+<div  class="layui-bg-cyan navi">
+	<div class="btnPos">
+  <button class="layui-btn layui-btn-sm">
+    <i class="layui-icon">&#xe654;</i>
+  </button>
+  <button class="layui-btn layui-btn-sm">
+    <i class="layui-icon">&#xe642;</i>
+  </button>
+  <button class="layui-btn layui-btn-sm">
+    <i class="layui-icon">&#xe640;</i>
+  </button>
+  </div>
+</div>
+
+<div id="tablePos"><table id="demo" lay-filter="test"></table>
+	</div>
+ 
+<script src="./layui/layui.js"></script>
+<script>
+layui.use('table', function(){
+  var table = layui.table;
+
+  
+  //绗竴涓疄渚�
+table.render({
+    elem: '#demo'
+    ,height: 312
+    ,url: 'http://localhost:8080/OnlinePaperSys/table' //鏁版嵁鎺ュ彛
+    ,page: true //寮�鍚垎椤�
+    ,cols: [[ //琛ㄥご
+      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+      ,{field: 'name', title: '鐢ㄦ埛鍚�', width:80}
+      ,{field: 'age', title: '骞撮緞', width:80, sort: true}
+    ]]
+  });
+  
+});
+</script>
+
+</body>
+</html>

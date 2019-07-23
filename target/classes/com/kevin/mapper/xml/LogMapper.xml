@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.LogMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TLog">
+		<id column="id" property="id" />
+		<result column="t_user" property="tUser" />
+		<result column="t_time" property="tTime" />
+		<result column="t_auth" property="tAuth" />
+	</resultMap>
+    <select id="getAllLogs" resultMap="BaseResultMap">
+    	select * from t_log
+    </select>
+    <insert id="insertLog" parameterType="com.kevin.entity.TLog" keyProperty="id" useGeneratedKeys="true">
+    insert t_log(t_user,t_time,t_auth)values(#{tUser},#{tTime},#{tAuth})
+    </insert>
+</mapper>

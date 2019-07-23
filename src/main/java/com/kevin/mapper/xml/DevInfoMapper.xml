@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.DevInfoMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TDevinfo">
+		<id column="id" property="id" />
+		<result column="t_name" property="tName" />
+		<result column="t_devtype" property="tDevtype" />
+		<result column="t_code" property="tCode" />
+		<result column="t_purchasetime" property="tPurchasetime" />
+		<result column="t_manu" property="tManu" />
+		<result column="t_deptid" property="tDeptid" />
+		<result column="t_roomid" property="tRoomid" />
+		<result column="t_totime" property="tTotime" />
+		<result column="t_person" property="tPerson" />
+		<result column="t_tel" property="tTel" />
+	</resultMap>
+    <select id="getAllDevInfo" resultMap="BaseResultMap">
+    	select * from t_devinfo
+    </select>
+    <insert id="insertDevInfo" parameterType="com.kevin.entity.TDevinfo" keyProperty="id" useGeneratedKeys="true">
+    insert t_devinfo(t_user,t_time,t_auth)values(#{tUser},#{tTime},#{tAuth})
+    </insert>
+    	<resultMap id="rootMap" type="com.kevin.entity.Root">
+    	<id column="id" property="id" />
+		<result column="t_name" property="text" />
+		<result column="t_descript" property="descript" />
+	</resultMap>
+    <select id="selectAllRooms" resultMap="rootMap">
+			select id,t_name from t_room 
+    </select>
+        <select id="childrenByRoot" resultMap="BaseResultMap">
+			select id,t_name from t_devinfo where t_roomid=#{id}
+    </select>
+    
+    
+</mapper>

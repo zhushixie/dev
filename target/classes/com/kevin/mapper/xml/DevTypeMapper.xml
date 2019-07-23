@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kevin.mapper.DevTypeMapper">
+	<resultMap id="BaseResultMap" type="com.kevin.entity.TDevtype">
+		<id column="id" property="id" />
+		<result column="t_name" property="tName"/>
+		<result column="t_type" property="tType"/>
+		<result column="t_descript" property="tDescript"/>
+		<result column="t_instructionid" property="tInstructionid"/>
+		<result column="t_dwgid" property="tDwgid"/>
+		<result column="t_plantid" property="tPlantid"/>
+		<result column="t_modelid" property="tModelid"/>
+	</resultMap>
+    <select id="getAllDevTypes" resultMap="BaseResultMap">
+    	select * from t_devtype where t_type = #{type} 
+    </select>
+        <select id="findDevTypeById" resultMap="BaseResultMap">
+    	select * from t_devtype where id = #{devTypeId} 
+    </select>
+    <insert id="insertDevType" parameterType="com.kevin.entity.TDevtype" keyProperty="id" useGeneratedKeys="true">
+    insert t_devtype(t_name,t_type,t_descript,t_instructionid,t_dwgid,t_plantid,t_modelid)
+    values(#{tName},#{tType},#{tDescript},#{tInstructionid},#{tDwgid},#{tPlantid},#{tModelid})
+    </insert>
+</mapper>
